@@ -1,13 +1,19 @@
 {
   "name": "node-file-cli",
-  "main": "./src/index.js",
+  "main": "index.js",
   "scripts": {
-    "dev": "node ./src/index.js",
-    "lint": "eslint src",
-    "precommit": "lint-staged"
+    "dev": "node index.js",
+    "lint": "eslint index.js src",
+    "precommit": "npm run lint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "*.js": [
+      "npm run lint",
       "eslint --fix",
       "git add"
     ]

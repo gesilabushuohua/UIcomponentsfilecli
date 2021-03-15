@@ -1,17 +1,16 @@
 #!/usr/bin/env node
-
 const { Command  } = require('commander');
 const program = new Command();
 
 import { test } from './src/test';
 
-test();
+test()
 
 program
-.version('1.0.0', '-v, -version', 'output the current version');
+.version('1.0.0', '-v, -version', 'output the current version')
 
 program
-.name('node-file');
+.name('node-file')
 
 program
 .command('list')
