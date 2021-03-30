@@ -1,5 +1,16 @@
 文件上传下载命令工具
 
+## 文件要求
+description.json
+```
+{
+  type: string require,
+  hasImg: boolean,
+  hasDoc: boolean,
+  showCode: boolean 
+}
+```
+
 ## 安装
 命令行执行，win10 无权限，使用管理员权限执行
 ```
