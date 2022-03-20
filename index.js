@@ -4,6 +4,8 @@ const inquirer = require('inquirer');
 
 const { config } = require('./config.js');
 const { FileController } = require('./fileController.js');
+const mes = 'Loading';
+const spinner = ora(mes);
 
 const fileController = new FileController(); 
 const program = new Command();
@@ -25,13 +27,16 @@ program
   .command('put <name>')
   .description('update local current floder')
   .option('-type, -t <type>', 'component type')
-  .action((name, options) => {
+  .action(async (name, options) => {
     const type = options.T;
     if(!type) {
       console.error('type is null');
       return;
     }
-    fileController.put(type, name);
+    spinner.start();
+    await fileController.put(type, name);
+    spinner.stop();
+    spinner.succeed('update succeed');
   });
 
 program
@@ -39,7 +44,7 @@ program
   .description('download remote current file, or floder')
   .option('-type, -t <type>', 'component type')
   .option('-save, -s [path]', 'file save path, default current path')
-  .action((name, options) => {
+  .action(async (name, options) => {
     const optionPath = options.S;
     const type = options.T;
     
@@ -49,7 +54,10 @@ program
     }
     // 无指定路径，使用当前路径
     const path = optionPath ? optionPath : __dirname;
-    fileController.get(type, name, path);
+    spinner.start();
+    await fileController.get(type, name, path);
+    spinner.stop();
+    spinner.succeed('download succeed');
   });
 
 

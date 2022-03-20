@@ -40,12 +40,11 @@ class FileController {
    * @param {string} 文件名
    * @param {string} 保存路径
    */
-  get(type, name, dir) {
-    fileGetRequest({ name, type }).then(async (res) => {
-      const fileStream = res.data;
-      const fullName = `${dir}/${name}.zip`;
-      handleFiles.readStreamToFile(fullName, fileStream);
-    });
+  async get(type, name, dir) {
+    const res = await fileGetRequest({ name, type });
+    const fileStream = res.data;
+    const fullName = `${dir}/${name}.zip`;
+    handleFiles.readStreamToFile(fullName, fileStream);
   }
 
 
