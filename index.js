@@ -1,13 +1,11 @@
 #!/usr/bin/env node
 const { Command } = require('commander');
 const inquirer = require('inquirer');
+// const ora = require('ora');
 
 const { config } = require('./config.js');
-const { FileController } = require('./fileController.js');
-const mes = 'Loading';
-const spinner = ora(mes);
+const { listRequest, downGitRepo } = require('./githubHttp.js');
 
-const fileController = new FileController(); 
 const program = new Command();
 
 const typesQue = [
@@ -24,55 +22,28 @@ program.version('1.0.0', '-v, -version', 'output the current version');
 program.name('node-file');
 
 program
-  .command('put <name>')
-  .description('update local current floder')
-  .option('-type, -t <type>', 'component type')
-  .action(async (name, options) => {
-    const type = options.T;
-    if(!type) {
-      console.error('type is null');
-      return;
-    }
-    spinner.start();
-    await fileController.put(type, name);
-    spinner.stop();
-    spinner.succeed('update succeed');
-  });
-
-program
-  .command('get <name>')
-  .description('download remote current file, or floder')
-  .option('-type, -t <type>', 'component type')
-  .option('-save, -s [path]', 'file save path, default current path')
-  .action(async (name, options) => {
-    const optionPath = options.S;
-    const type = options.T;
-    
-    if(!type) {
-      console.error('type is null');
-      return;
-    }
-    // 无指定路径，使用当前路径
-    const path = optionPath ? optionPath : __dirname;
-    spinner.start();
-    await fileController.get(type, name, path);
-    spinner.stop();
-    spinner.succeed('download succeed');
-  });
-
-
-
-program
   .command('list')
   .description('list current file or floder list')
-  .action((options) => {
-    inquirer
-      .prompt(typesQue)
-      .then((answers) => {
-        const { types } = config;
-        const { componentType } = answers;
-        fileController.list(types[componentType]);
-      });
+  .action(async (options) => {
+    // 用户选择下载模板
+    const answers = await inquirer.prompt(typesQue);
+    const { componentType } = answers;
+    const tags = await listRequest(componentType);
+    const tagNames = tags.map(tag => tag.name);
+
+    // 用户选择自己新下载的模板名称
+    const { tag } = await inquirer.prompt({
+      name: 'tag',
+      type: 'list',
+      choices: tagNames,
+      message: 'please choose a template to create project'
+    });
+
+    // const spinner = ora('downloading');
+    // spinner.start();
+    const res = await downGitRepo(componentType, tag);
+    // console.log(res);
+    // spinner.succeed();
   });
 
 // 解析字符串数组

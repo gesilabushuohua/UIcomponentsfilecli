@@ -12,6 +12,7 @@ const {
 
 const handleFiles = new HandleFiles();
 
+// 服务器端上传下载文件
 class FileController {
   constructor() {}
 

@@ -1,15 +1,4 @@
-文件上传下载命令工具
-
-## 文件要求
-description.json
-```
-{
-  type: string require,
-  hasImg: boolean,
-  hasDoc: boolean,
-  showCode: boolean 
-}
-```
+# npm 模板下载工具
 
 ## 安装
 命令行执行，win10 无权限，使用管理员权限执行
@@ -25,3 +14,10 @@ hello
 ## 踩坑
 npm link 后执行 hello，提示没有该命令
 确认用户环境变量 PATH 中 npm 路径 node_global 与 链接后生成的文件路径是否一致，不一致更改环境即可解决
+
+// 工具拆分
+
+## 功能
+* 使用 list 查询 vue template
+* get 下载模板
+* 上传到 npm 仓库

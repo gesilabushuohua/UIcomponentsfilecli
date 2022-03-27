@@ -1,14 +1,18 @@
 const config = {};
 
-config.host  = 'http://127.0.0.1:7001';
+config.user = 'gesilabushuohua';
+
+config.git = `https://api.github.com/repos/${config.user}`;
 
 const types = {};
-types[types['html'] = 1] = 'html';
-types[types['vue'] = 2] = 'vue';
-types[types['react'] = 3] = 'react';
+types[types['vue'] = 1] = 'vue';
 config.types = types;
 
-const typesArr = ['html', 'vue', 'react'];
+const typesArr = ['vue'];
 config.typesArr = typesArr;
+
+config.repos = {
+  'vue': 'vue-template'
+};
 
 module.exports.config = config; 
