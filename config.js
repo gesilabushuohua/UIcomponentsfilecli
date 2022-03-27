@@ -1,6 +1,6 @@
 const config = {};
 
-config.user = 'gesilabushuohua';
+config.user = 'xxxx';
 
 config.git = `https://api.github.com/repos/${config.user}`;
 
@@ -12,7 +12,7 @@ const typesArr = ['vue'];
 config.typesArr = typesArr;
 
 config.repos = {
-  'vue': 'vue-template'
+  'vue': 'xxx'
 };
 
 module.exports.config = config; 
