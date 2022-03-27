@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const { Command } = require('commander');
 const inquirer = require('inquirer');
-// const ora = require('ora');
+const ora = require('ora');
 
 const { config } = require('./config.js');
 const { listRequest, downGitRepo } = require('./githubHttp.js');
@@ -39,11 +39,12 @@ program
       message: 'please choose a template to create project'
     });
 
-    // const spinner = ora('downloading');
-    // spinner.start();
-    const res = await downGitRepo(componentType, tag);
-    // console.log(res);
-    // spinner.succeed();
+    const spinner = ora('downloading');
+    spinner.start();
+    await downGitRepo(componentType, tag);
+    // TODO ora stop 加载动画不停止
+    spinner.stop();
+    spinner.succeed('downloading succeed');
   });
 
 // 解析字符串数组
